@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ quiz.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Lato', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.5); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeDown 0.8s ease;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(233, 168, 120, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .question-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 20px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.1s; }
+        .question-card:nth-child(2) { animation-delay: 0.2s; }
+        .question-card:nth-child(3) { animation-delay: 0.3s; }
+        .question-card:nth-child(4) { animation-delay: 0.4s; }
+        .question-card:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-num {
+            font-size: 0.8rem;
+            color: #e9a878;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: #fff;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+        }
+
+        .option-label:hover {
+            background: rgba(233, 168, 120, 0.15);
+            border-color: rgba(233, 168, 120, 0.4);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        .option-label input[type="radio"] {
+            accent-color: #e9a878;
+            width: 16px;
+            height: 16px;
+        }
+
+        .option-label input[type="radio"]:checked + span {
+            color: #e9a878;
+            font-weight: 700;
+        }
+
+        .option-label:has(input:checked) {
+            background: rgba(233, 168, 120, 0.2);
+            border-color: #e9a878;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #e9a878, #f7c5a0);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 168, 120, 0.4);
+        }
+
+        @media (max-width: 500px) {
+            .options { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>{{ quiz.title }}</h1>
+        <p>{{ quiz.subtitle }}</p>
+    </div>
+
+    <form action="/submit/{{ quiz.id }}" method="POST">
+        {% for i, question in quiz.questions | enumerate %}
+        <div class="question-card">
+            <div class="question-num">Question {{ i + 1 }} of {{ quiz.questions | length }}</div>
+            <div class="question-text">{{ question.q }}</div>
+            <div class="options">
+                {% for j, option in question.options | enumerate %}
+                <label class="option-label">
+                    <input type="radio" name="q{{ i }}" value="{{ option }}" required>
+                    <span>{{ option }}</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="submit-btn">Submit Answers ✨</button>
+    </form>
+</div>
+
+<script>
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        starsContainer.appendChild(star);
+    }
+</script>
+</body>
+</html>
