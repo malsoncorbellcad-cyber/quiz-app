@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             min-height: 100vh;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -17,52 +16,10 @@
             justify-content: center;
             padding: 20px;
         }
-
-        .stars {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .star {
-            position: absolute;
-            width: 2px; height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite alternate;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0.2; }
-            100% { opacity: 1; }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            color: rgba(255,255,255,0.6);
-            font-size: 1.1rem;
-        }
-
+        .container { position: relative; z-index: 1; width: 100%; max-width: 600px; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #fff; margin-bottom: 10px; }
+        .header p { color: rgba(255,255,255,0.6); font-size: 1.1rem; }
         .quiz-card {
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
@@ -75,71 +32,25 @@
             justify-content: space-between;
             gap: 15px;
         }
-
-        .quiz-info h2 {
-            font-family: 'Playfair Display', serif;
-            color: #fff;
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-        }
-
-        .quiz-info p {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.9rem;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-
+        .quiz-info h2 { font-family: 'Playfair Display', serif; color: #fff; font-size: 1.3rem; margin-bottom: 5px; }
+        .quiz-info p { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+        .btn-group { display: flex; gap: 10px; flex-shrink: 0; }
         .btn-start {
             padding: 10px 20px;
             background: linear-gradient(135deg, #e9a878, #f7c5a0);
-            color: #1a1a2e;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            color: #1a1a2e; border: none; border-radius: 10px;
+            font-size: 0.9rem; font-weight: 700; cursor: pointer;
+            text-decoration: none; transition: all 0.3s ease;
         }
-
-        .btn-start:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(233, 168, 120, 0.4);
-        }
-
         .btn-share {
-            padding: 10px 20px;
-            background: #25D366;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-share:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-        }
-
-        @media (max-width: 500px) {
-            .quiz-card { flex-direction: column; align-items: flex-start; }
-            .header h1 { font-size: 2rem; }
+            padding: 10px 20px; background: #25D366;
+            color: #fff; border: none; border-radius: 10px;
+            font-size: 0.9rem; font-weight: 700; cursor: pointer;
+            text-decoration: none; transition: all 0.3s ease;
         }
     </style>
 </head>
 <body>
-
-<div class="stars" id="stars"></div>
-
 <div class="container">
     <div class="header">
         <h1>Quiz App 🎯</h1>
@@ -180,17 +91,5 @@
     </div>
 
 </div>
-
-<script>
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 80; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.animationDelay = Math.random() * 3 + 's';
-        starsContainer.appendChild(star);
-    }
-</script>
 </body>
 </html>
