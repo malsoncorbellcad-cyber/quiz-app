@@ -136,8 +136,7 @@ quizzes = {"quiz1": quiz1, "quiz2": quiz2, "quiz3": quiz3}
 
 @app.route("/")
 def home():
-    return "<h2>Quiz Links:</h2><a href='/quiz/quiz1'>Quiz 1 - Fun Quiz</a><br><a href='/quiz/quiz2'>Quiz 2 - Romantic Quiz</a>"
-
+    return render_template("home.html")
 @app.route("/quiz/<quiz_id>")
 def quiz(quiz_id):
     if quiz_id not in quizzes:
