@@ -99,8 +99,40 @@ quiz2 = {
         }
     ]
 }
-
-quizzes = {"quiz1": quiz1, "quiz2": quiz2}
+# Quiz 3 - Family Check-in
+quiz3 = {
+    "id": "quiz3",
+    "title": "Family Check-in 💕",
+    "subtitle": "Tell me how you are doing...",
+    "questions": [
+        {
+            "q": "How are you feeling today?",
+            "options": ["Amazing! 😄", "Good, Alhamdulillah 🙏", "Just okay 😐", "Need a hug 🤗"],
+            "correct": 0
+        },
+        {
+            "q": "How is your health?",
+            "options": ["Fit & fine 💪", "Alhamdulillah good 😊", "Little tired 😴", "Not so well 🤒"],
+            "correct": 0
+        },
+        {
+            "q": "How is your daily routine?",
+            "options": ["Very busy 📚", "Balanced & good ⚖️", "Relaxed & easy 😌", "Need more energy ⚡"],
+            "correct": 0
+        },
+        {
+            "q": "Are you eating well?",
+            "options": ["Yes, very well 🍽️", "Sometimes skip meals 😅", "Need to eat better 🥗", "Too busy to eat 😂"],
+            "correct": 0
+        },
+        {
+            "q": "What do you need right now?",
+            "options": ["Rest & sleep 😴", "Good food 🍲", "Family time ❤️", "Just a chat 💬"],
+            "correct": 0
+        }
+    ]
+}
+quizzes = {"quiz1": quiz1, "quiz2": quiz2, "quiz3": quiz3}
 
 @app.route("/")
 def home():
